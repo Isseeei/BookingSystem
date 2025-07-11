@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'email_login_screen.dart'; // Make sure you have this screen
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -42,6 +43,51 @@ class _LoginPageState extends State<LoginPage> {
       );
       Navigator.pushReplacementNamed(context, '/home');
     }
+  }
+
+  void _showEmailChoiceDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: const Text('Choose an account'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const CircleAvatar(child: Icon(Icons.person)),
+                title: const Text('user1@example.com'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Handle selection
+                },
+              ),
+              ListTile(
+                leading: const CircleAvatar(child: Icon(Icons.person)),
+                title: const Text('user2@example.com'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Handle selection
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.add),
+                title: const Text('Add another account'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const EmailLoginScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildTextField({
@@ -166,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Colors.black, // Updated to solid black to match image
+                          color: Colors.black,
                         ),
                         child: const Center(
                           child: Text(
@@ -182,10 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
-// Sign Up Below LOGIN
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -207,17 +250,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 20),
-
-// OR Separator
                   Row(
                     children: const [
                       Expanded(
-                        child: Divider(
-                          color: Colors.white54,
-                          thickness: 1,
-                        ),
+                        child: Divider(color: Colors.white54, thickness: 1),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -227,17 +264,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Expanded(
-                        child: Divider(
-                          color: Colors.white54,
-                          thickness: 1,
-                        ),
+                        child: Divider(color: Colors.white54, thickness: 1),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 20),
-
-// Google Sign-in Button
+                  // Google Sign-in Button with Popup
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -245,9 +277,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: TextButton.icon(
-                      onPressed: () {
-                        //signInWithGoogle(context);
-                      },
+                      onPressed: _showEmailChoiceDialog,
                       icon: Image.asset(
                         'assets/images/google_icon.jpg',
                         height: 24,
@@ -268,7 +298,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
                 ],
               ),
